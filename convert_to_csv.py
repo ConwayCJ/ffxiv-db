@@ -1,13 +1,19 @@
 from html_to_craftables import parse_all_pages, parse_page, rows_to_craftables, row_to_craftable
 from html_to_craftables import Craftable, Ingredient, professions, tiers
 import csv
+import os
 
 def make_crafter_db_csv():
   header = ["name", "profession", "png", "lvl", "type", "yield", "dur", "diff", "max_qual", "ingredients", "range"]
 
-  with open('crafter_db.csv', 'w', newline='') as file:
+  folder_path = './crafter_db/'
+  os.makedirs(folder_path, exist_ok=True)
+
+  csv_path = os.path.join(folder_path, 'all_crafters.csv')
+
+  with open(csv_path, 'w', newline='') as file:
     writer = csv.writer(file)
-    
+
     # write header
     writer.writerow(header)
     dict = parse_all_pages()
@@ -22,10 +28,13 @@ def make_crafter_db_csv():
           vals = item.vals_to_list()
           writer.writerow(vals + [range])
 
-def make_profession_csv(prof): 
+def make_profession_csv(prof):
 
   header = ["name", "profession", "png", "lvl", "type", "yield", "dur", "diff", "max_qual", "ingredients", "range"]
-  file_name = prof + "_db.csv"
+  file_name = prof.lower() + "_db.csv"
+
+  folder_path = './crafter_db/'
+  os.makedirs(folder_path, exist_ok=True)
 
   prof_dict = {}
 
@@ -34,8 +43,9 @@ def make_profession_csv(prof):
 
     html = parse_page(prof, tier)
     prof_dict[tier] = rows_to_craftables(html)
-    
-  with open(file_name, 'w', newline='') as file:
+
+  csv_file_path = os.path.join(folder_path + file_name)  
+  with open(csv_file_path, 'w', newline='') as file:
     writer = csv.writer(file)
     # write header
     writer.writerow(header)
