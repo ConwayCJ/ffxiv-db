@@ -1,0 +1,6 @@
+name,profession,png,lvl,type,yield,dur,diff,max_qual,ingredients,range
+Wooden Shield,Carpenter,wooden_shield.png,5,Shield,1,70,120,240,"[['Wood', 2], ['Iron Nails', 1]]",1-9
+Wooden Sword,Carpenter,wooden_sword.png,7,Weapon,1,60,110,220,"[['Wood', 1], ['Leather Strip', 1]]",1-9
+Oak Bow,Carpenter,oak_bow.png,15,Weapon,1,80,140,280,"[['Oak Wood', 2], ['String', 1]]",10-19
+Iron Sword,Blacksmith,iron_sword.png,8,Weapon,1,90,130,260,"[['Iron Ingot', 2], ['Wooden Hilt', 1]]",1-9
+Steel Shield,Blacksmith,steel_shield.png,12,Shield,1,100,150,300,"[['Steel Ingot', 3], ['Leather Strap', 2]]",10-19
