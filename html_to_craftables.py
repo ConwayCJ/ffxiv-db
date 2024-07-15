@@ -16,6 +16,11 @@ class Craftable:
     self.diff = diff
     self.max_qual = max_qual
     self.ingredients = ingredients
+  
+  def vals_to_list(self):
+    ingredients_list = [[ingredient.name, ingredient.quantity] for ingredient in self.ingredients]
+    return [self.name, self.profession, self.png, self.lvl, self.type, self._yield, self.dur, self.diff, self.max_qual, ingredients_list]
+
 
 class Ingredient:
   def __init__(self, name, quantity):
@@ -72,12 +77,13 @@ def row_to_craftable(row):
 
     # name / png
     col_1 = cols.pop(0)
-    name = col_1.get_text()
+    c_name = col_1.get_text(strip=True)
     png = 'https://ffxiv.consolegameswiki.com' + col_1.find('img')['src']
     
-    if "'" in name:
-      name = name.replace("'", r"\'")
+    if "'" in c_name:
+      c_name = c_name.replace("'", r"\'")
 
+    print(c_name)
     # profession
     prof = cols.pop(0).find("a").get_text(strip=True)
     # lvl
@@ -108,4 +114,4 @@ def row_to_craftable(row):
   
       ingredients.append(Ingredient(name, quantity))
 
-    return Craftable(name,png, prof, lvl, type, _yield, dur, diff, max_qual, ingredients)
+    return Craftable(c_name, png, prof, lvl, type, _yield, dur, diff, max_qual, ingredients)
