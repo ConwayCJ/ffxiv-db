@@ -83,11 +83,13 @@ def row_to_craftable(row):
     if "'" in c_name:
       c_name = c_name.replace("'", r"\'")
 
-    print(c_name)
     # profession
     prof = cols.pop(0).find("a").get_text(strip=True)
     # lvl
     lvl = cols.pop(0).get_text(strip=True)
+
+    if "★" in lvl:
+      lvl = lvl.replace("★","*")
     # type
     type = cols.pop(0).get_text(strip=True).replace("'", r"\'")
     # yield
