@@ -22,13 +22,21 @@ class Ingredient:
     self.name = name
     self.quantity = quantity
 
-def parse_all_professions():
-  all_craftables = []
+def parse_all_pages():
+  all_craftables = {}
 
   for prof in professions:
+
+    if prof not in all_craftables:
+      all_craftables[prof] = {}
+
     for tier in tiers:
       rows = parse_page(prof, tier)
-      all_craftables.append(rows_to_craftables(rows))
+
+      all_craftables[prof][tier] = rows_to_craftables(rows)
+
+  print(all_craftables)
+  return all_craftables
 
 def parse_page(profession, tier):
     if not isinstance(tier, str):
@@ -37,17 +45,17 @@ def parse_page(profession, tier):
     if "_-_" not in tier:
       tier = tier.replace("-", "_-_")
 
-      url = 'https://ffxiv.consolegameswiki.com/wiki/{}_Recipes/Level_{}'.format(profession, tier)
-      page = requests.get(url)
+    url = 'https://ffxiv.consolegameswiki.com/wiki/{}_Recipes/Level_{}'.format(profession, tier)
+    page = requests.get(url)
 
-      if page.status_code == 404:
-        raise requests.exceptions.HTTPError("Issue connecting to wiki. Try a valid range. Here's a list\n1-9, 10-19, 20-29, 30-39, 40-49, 50,\n51-59, 60, 61-69, 70, 71-79, 80, 81-89, 90")
+    if page.status_code == 404:
+      raise requests.exceptions.HTTPError("Issue connecting to wiki. Try a valid range. Here's a list\n1-9, 10-19, 20-29, 30-39, 40-49, 50,\n51-59, 60, 61-69, 70, 71-79, 80, 81-89, 90")
 
-      soup = BeautifulSoup(page.content, 'html.parser')
+    soup = BeautifulSoup(page.content, 'html.parser')
   
-      tbody = soup.find("tbody")
-      rows = tbody.find_all("tr")
-      thead = rows.pop(0)
+    tbody = soup.find("tbody")
+    rows = tbody.find_all("tr")
+    thead = rows.pop(0)
 
     return rows
 
