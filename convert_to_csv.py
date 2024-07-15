@@ -6,7 +6,7 @@ import os
 def make_crafter_db_csv():
   header = ["name", "profession", "png", "lvl", "type", "yield", "dur", "diff", "max_qual", "ingredients", "range"]
 
-  folder_path = './crafter_db/'
+  folder_path = './crafter_csvs/'
   os.makedirs(folder_path, exist_ok=True)
 
   csv_path = os.path.join(folder_path, 'all_crafters.csv')
@@ -33,7 +33,7 @@ def make_profession_csv(prof):
   header = ["name", "profession", "png", "lvl", "type", "yield", "dur", "diff", "max_qual", "ingredients", "range"]
   file_name = prof.lower() + "_db.csv"
 
-  folder_path = './crafter_db/'
+  folder_path = './crafter_csvs/'
   os.makedirs(folder_path, exist_ok=True)
 
   prof_dict = {}
